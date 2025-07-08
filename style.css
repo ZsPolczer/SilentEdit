@@ -1,0 +1,190 @@
+/* style.css */
+
+/* Base styles - Tailwind handles most of this, but custom overrides for fonts/colors */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a; /* Deep dark background */
+    color: #e0e0e0; /* Light gray text */
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif; /* Futuristic/cinematic headings */
+    color: #ffffff;
+}
+
+/* Hero Section Video Background */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.hero-video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Ensure video covers the area */
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay for text readability */
+    z-index: 0;
+}
+
+/* Subtle Glow for Buttons/Cards */
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.glow-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 170, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    transform: scale(0);
+}
+.glow-button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+.glow-button:hover {
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Card Glow Effect */
+.card-glow {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+.card-glow::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    transform: scale(0);
+}
+.card-glow:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+.card-glow:hover {
+    border-color: rgba(0, 170, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+/* Legendary Card Specific Styling */
+.legendary-card {
+    background: linear-gradient(135deg, #1a0a2a, #0a0a1a); /* Darker, richer background */
+    border: 2px solid #ffcc00; /* Gold border */
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5); /* Stronger gold glow */
+    position: relative;
+    z-index: 10; /* Bring to front */
+    transform: scale(1.05); /* Slightly larger */
+}
+.legendary-card:hover {
+    box-shadow: 0 0 40px rgba(255, 204, 0, 0.8); /* Even stronger hover glow */
+    transform: scale(1.07) translateY(-8px);
+}
+.legendary-card::before {
+    background: radial-gradient(circle at center, rgba(255, 204, 0, 0.2) 0%, transparent 70%); /* Gold inner glow */
+}
+.legendary-card .price-tag {
+    color: #ffcc00; /* Gold price */
+}
+.legendary-card .request-button {
+    background: linear-gradient(45deg, #ffcc00, #ffa500); /* Gold button */
+    color: #333;
+    font-weight: bold;
+}
+.legendary-card .request-button:hover {
+    background: linear-gradient(45deg, #ffa500, #ffcc00);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+}
+
+/* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive adjustments for pricing grid */
+@media (min-width: 768px) {
+    #services .grid-cols-1 {
+        grid-template-columns: 1fr 1.2fr 1fr; /* Make Legendary card slightly wider */
+    }
+}
+
+/* Portfolio item hover effect */
+.portfolio-item img {
+    transition: transform 0.3s ease;
+}
+.portfolio-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Portfolio video container for aspect ratio */
+.video-responsive {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+.video-responsive iframe,
+.video-responsive video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}

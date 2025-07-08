@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Vision. Expertly Crafted. - Edit & Montage Requests</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for clean readability, and a more cinematic display font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for cinematic feel and animations (copied from style.css for self-containment) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a; /* Deep dark background */
+            color: #e0e0e0; /* Light gray text */
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif; /* Futuristic/cinematic headings */
+            color: #ffffff;
+        }
+
+        /* Hero Section Video Background */
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .hero-video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensure video covers the area */
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay for text readability */
+            z-index: 0;
+        }
+
+        /* Subtle Glow for Buttons/Cards */
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 170, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: scale(0);
+        }
+        .glow-button:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Card Glow Effect */
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: scale(0);
+        }
+        .card-glow:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .card-glow:hover {
+            border-color: rgba(0, 170, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        /* Legendary Card Specific Styling */
+        .legendary-card {
+            background: linear-gradient(135deg, #1a0a2a, #0a0a1a); /* Darker, richer background */
+            border: 2px solid #ffcc00; /* Gold border */
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.5); /* Stronger gold glow */
+            position: relative;
+            z-index: 10; /* Bring to front */
+            transform: scale(1.05); /* Slightly larger */
+        }
+        .legendary-card:hover {
+            box-shadow: 0 0 40px rgba(255, 204, 0, 0.8); /* Even stronger hover glow */
+            transform: scale(1.07) translateY(-8px);
+        }
+        .legendary-card::before {
+            background: radial-gradient(circle at center, rgba(255, 204, 0, 0.2) 0%, transparent 70%); /* Gold inner glow */
+        }
+        .legendary-card .price-tag {
+            color: #ffcc00; /* Gold price */
+        }
+        .legendary-card .request-button {
+            background: linear-gradient(45deg, #ffcc00, #ffa500); /* Gold button */
+            color: #333;
+            font-weight: bold;
+        }
+        .legendary-card .request-button:hover {
+            background: linear-gradient(45deg, #ffa500, #ffcc00);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+        }
+
+        /* Fade-in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Responsive adjustments for pricing grid */
+        @media (min-width: 768px) {
+            #services .grid-cols-1 {
+                grid-template-columns: 1fr 1.2fr 1fr; /* Make Legendary card slightly wider */
+            }
+        }
+
+        /* Portfolio item hover effect */
+        .portfolio-item img {
+            transition: transform 0.3s ease;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Portfolio video container for aspect ratio */
+        .video-responsive {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-responsive iframe,
+        .video-responsive video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+        <div class="hero-video-container">
+            <!-- Replace with your own video URL -->
+            <video autoplay loop muted playsinline class="hero-video">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-lines-4158-large.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="relative z-10 p-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight fade-in">Your Vision. Expertly Crafted.</h1>
+            <p class="text-lg md:text-xl mb-8 fade-in" style="transition-delay: 0.2s;">
+                Transform your raw footage into cinematic masterpieces and captivating montages.
+            </p>
+            <a href="#services" class="glow-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 fade-in" style="transition-delay: 0.4s;">
+                Explore Our Edits
+            </a>
+        </div>
+    </section>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-80 backdrop-blur-sm z-50 p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors">VibeEdits</a>
+            <div class="space-x-6">
+                <a href="#services" class="text-gray-300 hover:text-blue-400 transition-colors">Services</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-blue-400 transition-colors">Portfolio</a>
+                <a href="#how-it-works" class="text-gray-300 hover:text-blue-400 transition-colors">How It Works</a>
+                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
+                <a href="#admin-login" class="text-gray-300 hover:text-red-400 transition-colors">Admin Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Services/Pricing Section -->
+    <section id="services" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 fade-in">Our Editing Tiers</h2>
+        <p class="text-lg text-gray-400 mb-10 fade-in" style="transition-delay: 0.2s;">
+            Choose the perfect package to bring your vision to life. Each tier is designed to deliver exceptional quality tailored to your needs.
+        </p>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+
+            <!-- Legendary Edit (Highlighted) -->
+            <div class="card-glow legendary-card p-8 rounded-xl shadow-xl text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.2s;">
+                <h3 class="text-3xl font-bold mb-4 text-yellow-400">Legendary Edit</h3>
+                <p class="text-5xl font-extrabold mb-6 price-tag">€25</p>
+                <p class="text-lg mb-6 text-gray-300">
+                    Unleash the full potential of your footage with our ultimate editing experience. This tier offers unparalleled quality and creative depth, ensuring your project truly stands out.
+                </p>
+                <ul class="text-left mb-8 space-y-3 text-gray-200">
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Up to 2 Minutes of Final Video</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> **Unlimited Revisions (within reason)**</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> **Premium Effects & Visuals (Truly Outstanding)**</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Advanced Cinematic Color Grading</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Custom Sound Design & Mixing</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Priority Queue & Faster Turnaround</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Dedicated Creative Consultation</li>
+                </ul>
+                <!-- PayPal Buy Now Button Placeholder for Legendary Edit -->
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
+                    <input type="hidden" name="item_name" value="Legendary Edit Request">
+                    <input type="hidden" name="amount" value="25.00">
+                    <input type="hidden" name="currency_code" value="EUR">
+                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
+                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
+                    <input type="hidden" name="custom" value="Legendary Edit"> <!-- Custom data for your tracking -->
+                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg transition-all duration-300">
+                        Request Legendary Edit
+                    </button>
+                </form>
+            </div>
+
+            <!-- High Quality Premium Edit -->
+            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.4s;">
+                <h3 class="text-3xl font-bold mb-4 text-blue-400">Premium Edit</h3>
+                <p class="text-5xl font-extrabold mb-6">€15</p>
+                <p class="text-lg mb-6 text-gray-300">
+                    High-quality editing for a polished and professional look. Perfect for most needs, delivering impactful results.
+                </p>
+                <ul class="text-left mb-8 space-y-3 text-gray-200">
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Up to 1 Minute of Final Video</li>
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> 2 Rounds of Revisions</li>
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Standard Dynamic Effects & Transitions</li>
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Basic Color Correction</li>
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Royalty-Free Background Music</li>
+                </ul>
+                <!-- PayPal Buy Now Button Placeholder for Premium Edit -->
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
+                    <input type="hidden" name="item_name" value="Premium Edit Request">
+                    <input type="hidden" name="amount" value="15.00">
+                    <input type="hidden" name="currency_code" value="EUR">
+                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
+                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
+                    <input type="hidden" name="custom" value="Premium Edit"> <!-- Custom data for your tracking -->
+                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+                        Request Premium Edit
+                    </button>
+                </form>
+            </div>
+
+            <!-- Cheap but Clean Edit -->
+            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.6s;">
+                <h3 class="text-3xl font-bold mb-4 text-purple-400">Clean Edit</h3>
+                <p class="text-5xl font-extrabold mb-6">€5</p>
+                <p class="text-lg mb-6 text-gray-300">
+                    A quick and clean edit, perfect for simple cuts, basic enhancements, and getting your footage polished efficiently.
+                </p>
+                <ul class="text-left mb-8 space-y-3 text-gray-200">
+                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Up to 30 Seconds of Final Video</li>
+                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> 1 Round of Revisions</li>
+                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Essential Cuts & Transitions</li>
+                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Standard Audio Mix</li>
+                </ul>
+                <!-- PayPal Buy Now Button Placeholder for Clean Edit -->
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
+                    <input type="hidden" name="item_name" value="Clean Edit Request">
+                    <input type="hidden" name="amount" value="5.00">
+                    <input type="hidden" name="currency_code" value="EUR">
+                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
+                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
+                    <input type="hidden" name="custom" value="Clean Edit"> <!-- Custom data for your tracking -->
+                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg bg-purple-600 hover:bg-purple-700 transition-all duration-300">
+                        Request Clean Edit
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Portfolio/Showcase Section -->
+    <section id="portfolio" class="py-20 px-4 bg-gray-950 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-white fade-in">Our Masterpieces</h2>
+        <p class="text-lg text-gray-400 mb-10 fade-in" style="transition-delay: 0.2s;">
+            Witness the quality and creativity we bring to every project. Our portfolio showcases a range of styles and complexities.
+        </p>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Portfolio Item 1 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.3s;">
+                <div class="video-responsive">
+                    <!-- Replace with your YouTube/Vimeo embed code or a <video> tag -->
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 1 Thumbnail" class="w-full h-full object-cover">
+                    <!-- Example for YouTube embed (uncomment and replace URL when ready):
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    -->
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Epic Gaming Montage</h3>
+                    <p class="text-gray-400 text-sm">A high-octane edit featuring dynamic cuts, custom effects, and synchronized music.</p>
+                </div>
+            </div>
+            <!-- Portfolio Item 2 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.4s;">
+                <div class="video-responsive">
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 2 Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Cinematic Travel Vlog</h3>
+                    <p class="text-gray-400 text-sm">Beautifully graded footage with smooth transitions and immersive soundscapes.</p>
+                </div>
+            </div>
+            <!-- Portfolio Item 3 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.5s;">
+                <div class="video-responsive">
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 3 Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Product Showcase Reel</h3>
+                    <p class="text-gray-400 text-sm">Sleek and engaging visuals designed to highlight key product features effectively.</p>
+                </div>
+            </div>
+            <!-- Portfolio Item 4 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.6s;">
+                <div class="video-responsive">
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 4 Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Event Highlight Film</h3>
+                    <p class="text-gray-400 text-sm">Capturing the energy and emotion of live events with dynamic editing.</p>
+                </div>
+            </div>
+            <!-- Portfolio Item 5 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.7s;">
+                <div class="video-responsive">
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 5 Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Music Video Narrative</h3>
+                    <p class="text-gray-400 text-sm">Story-driven editing synchronized to music, enhancing the artistic vision.</p>
+                </div>
+            </div>
+            <!-- Portfolio Item 6 - Placeholder for Video Embed -->
+            <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.8s;">
+                <div class="video-responsive">
+                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 6 Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Educational Content Edit</h3>
+                    <p class="text-gray-400 text-sm">Clear, concise, and engaging edits for tutorials and educational videos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-4 bg-black text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-white fade-in">How It Works</h2>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="fade-in" style="transition-delay: 0.2s;">
+                <div class="text-blue-400 text-6xl mb-4">1</div>
+                <h3 class="text-2xl font-bold text-white mb-3">Choose Your Tier</h3>
+                <p class="text-gray-400">Select the editing package that best suits your needs and budget from our services above.</p>
+            </div>
+            <div class="fade-in" style="transition-delay: 0.4s;">
+                <div class="text-blue-400 text-6xl mb-4">2</div>
+                <h3 class="text-2xl font-bold text-white mb-3">Submit Your Footage & Details</h3>
+                <p class="text-gray-400">After payment via PayPal, we'll guide you on how to securely upload your raw footage and provide your specific instructions and creative vision.</p>
+            </div>
+            <div class="fade-in" style="transition-delay: 0.6s;">
+                <div class="text-blue-400 text-6xl mb-4">3</div>
+                <h3 class="text-2xl font-bold text-white mb-3">Receive Your Masterpiece</h3>
+                <p class="text-gray-400">We'll craft your edit with precision and passion, delivering the final product within the agreed timeframe, with revisions as per your chosen tier.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/FAQ Section -->
+    <section id="contact" class="py-20 px-4 bg-gray-950 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-white fade-in">Get In Touch</h2>
+        <div class="container mx-auto max-w-2xl text-gray-300">
+            <p class="text-lg mb-8 fade-in" style="transition-delay: 0.2s;">
+                Have questions or a custom request? Feel free to reach out to us! We're here to help bring your ideas to life.
+            </p>
+            <div class="space-y-4 fade-in" style="transition-delay: 0.4s;">
+                <p>Email: <a href="mailto:info@vibe-edits.com" class="text-blue-400 hover:underline">info@vibe-edits.com</a></p>
+                <p>Discord: <span class="text-blue-400">VibeEdits#1234</span></p>
+                <p>Or send us a message directly:</p>
+                <!-- Simple Contact Form Placeholder -->
+                <form class="bg-gray-800 p-8 rounded-xl shadow-lg text-left">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-300 text-sm font-bold mb-2">Name:</label>
+                        <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Your Name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-300 text-sm font-bold mb-2">Email:</label>
+                        <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="your@email.com">
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-300 text-sm font-bold mb-2">Message:</label>
+                        <textarea id="message" name="message" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Your message..."></textarea>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button type="submit" class="glow-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Login Placeholder -->
+    <section id="admin-login" class="py-20 px-4 bg-black text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white fade-in">Admin Area</h2>
+        <p class="text-lg text-gray-400 mb-8 fade-in" style="transition-delay: 0.2s;">
+            This section is for authorized personnel only.
+        </p>
+        <div class="container mx-auto max-w-md bg-gray-800 p-8 rounded-xl shadow-lg fade-in" style="transition-delay: 0.4s;">
+            <form>
+                <div class="mb-4">
+                    <label for="admin-username" class="block text-gray-300 text-sm font-bold mb-2 text-left">Username:</label>
+                    <input type="text" id="admin-username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Admin Username">
+                </div>
+                <div class="mb-6">
+                    <label for="admin-password" class="block text-gray-300 text-sm font-bold mb-2 text-left">Password:</label>
+                    <input type="password" id="admin-password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Admin Password">
+                </div>
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="glow-button bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300">
+                        Admin Login
+                    </button>
+                </div>
+            </form>
+            <p class="text-sm text-gray-500 mt-6">
+                *Note: Actual admin login and order management would require a secure backend system.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
+        <div class="container mx-auto">
+            <p>&copy; 2025 VibeEdits. All rights reserved.</p>
+            <p class="mt-2">Website still under development. Further fixes and changes are soon to be made.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
