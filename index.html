@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Vision. Expertly Crafted. - Edit & Montage Requests</title>
+    <title>Your Vision. Expertly Crafted. - SilentEdit</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter for clean readability, and a more cinematic display font -->
@@ -197,6 +197,57 @@
             height: 100%;
             border: 0;
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: #ff0000;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -214,7 +265,7 @@
         <div class="relative z-10 p-4 max-w-4xl mx-auto">
             <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight fade-in">Your Vision. Expertly Crafted.</h1>
             <p class="text-lg md:text-xl mb-8 fade-in" style="transition-delay: 0.2s;">
-                Transform your raw footage into cinematic masterpieces and captivating montages.
+                Transform your raw footage into cinematic masterpieces and captivating montages with SilentEdit.
             </p>
             <a href="#services" class="glow-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 fade-in" style="transition-delay: 0.4s;">
                 Explore Our Edits
@@ -225,11 +276,12 @@
     <!-- Navigation Bar -->
     <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-80 backdrop-blur-sm z-50 p-4 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors">VibeEdits</a>
+            <a href="#home" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors">SilentEdit</a>
             <div class="space-x-6">
                 <a href="#services" class="text-gray-300 hover:text-blue-400 transition-colors">Services</a>
                 <a href="#portfolio" class="text-gray-300 hover:text-blue-400 transition-colors">Portfolio</a>
                 <a href="#how-it-works" class="text-gray-300 hover:text-blue-400 transition-colors">How It Works</a>
+                <a href="#reviews" class="text-gray-300 hover:text-blue-400 transition-colors">Reviews</a>
                 <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
                 <a href="#admin-login" class="text-gray-300 hover:text-red-400 transition-colors">Admin Login</a>
             </div>
@@ -245,94 +297,61 @@
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
 
             <!-- Legendary Edit (Highlighted) -->
-            <div class="card-glow legendary-card p-8 rounded-xl shadow-xl text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.2s;">
+            <div class="card-glow legendary-card p-8 rounded-xl shadow-xl text-white transform hover:scale-105 transition-all duration-300 fade-in" data-tier="Legendary" data-price="25.00" style="transition-delay: 0.2s;">
                 <h3 class="text-3xl font-bold mb-4 text-yellow-400">Legendary Edit</h3>
                 <p class="text-5xl font-extrabold mb-6 price-tag">€25</p>
                 <p class="text-lg mb-6 text-gray-300">
                     Unleash the full potential of your footage with our ultimate editing experience. This tier offers unparalleled quality and creative depth, ensuring your project truly stands out.
                 </p>
                 <ul class="text-left mb-8 space-y-3 text-gray-200">
-                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Up to 2 Minutes of Final Video</li>
-                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> **Unlimited Revisions (within reason)**</li>
-                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> **Premium Effects & Visuals (Truly Outstanding)**</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Up to 1 Minute of Final Video</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Unlimited Revisions (within reason)</li>
+                    <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Premium Effects & Visuals (Truly Outstanding)</li>
                     <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Advanced Cinematic Color Grading</li>
                     <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Custom Sound Design & Mixing</li>
                     <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Priority Queue & Faster Turnaround</li>
                     <li class="flex items-center"><span class="text-yellow-400 mr-2">&#10003;</span> Dedicated Creative Consultation</li>
                 </ul>
-                <!-- PayPal Buy Now Button Placeholder for Legendary Edit -->
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
-                    <input type="hidden" name="cmd" value="_xclick">
-                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
-                    <input type="hidden" name="item_name" value="Legendary Edit Request">
-                    <input type="hidden" name="amount" value="25.00">
-                    <input type="hidden" name="currency_code" value="EUR">
-                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
-                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
-                    <input type="hidden" name="custom" value="Legendary Edit"> <!-- Custom data for your tracking -->
-                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg transition-all duration-300">
-                        Request Legendary Edit
-                    </button>
-                </form>
+                <button class="request-button w-full py-4 rounded-lg text-lg transition-all duration-300">
+                    Request Legendary Edit
+                </button>
             </div>
 
             <!-- High Quality Premium Edit -->
-            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.4s;">
+            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" data-tier="Premium" data-price="15.00" style="transition-delay: 0.4s;">
                 <h3 class="text-3xl font-bold mb-4 text-blue-400">Premium Edit</h3>
                 <p class="text-5xl font-extrabold mb-6">€15</p>
                 <p class="text-lg mb-6 text-gray-300">
                     High-quality editing for a polished and professional look. Perfect for most needs, delivering impactful results.
                 </p>
                 <ul class="text-left mb-8 space-y-3 text-gray-200">
-                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Up to 1 Minute of Final Video</li>
+                    <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Up to 30 Seconds of Final Video</li>
                     <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> 2 Rounds of Revisions</li>
                     <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Standard Dynamic Effects & Transitions</li>
                     <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Basic Color Correction</li>
                     <li class="flex items-center"><span class="text-blue-400 mr-2">&#10003;</span> Royalty-Free Background Music</li>
                 </ul>
-                <!-- PayPal Buy Now Button Placeholder for Premium Edit -->
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
-                    <input type="hidden" name="cmd" value="_xclick">
-                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
-                    <input type="hidden" name="item_name" value="Premium Edit Request">
-                    <input type="hidden" name="amount" value="15.00">
-                    <input type="hidden" name="currency_code" value="EUR">
-                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
-                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
-                    <input type="hidden" name="custom" value="Premium Edit"> <!-- Custom data for your tracking -->
-                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300">
-                        Request Premium Edit
-                    </button>
-                </form>
+                <button class="request-button w-full py-4 rounded-lg text-lg bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+                    Request Premium Edit
+                </button>
             </div>
 
             <!-- Cheap but Clean Edit -->
-            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" style="transition-delay: 0.6s;">
+            <div class="card-glow p-8 rounded-xl shadow-xl bg-gray-800 text-white transform hover:scale-105 transition-all duration-300 fade-in" data-tier="Clean" data-price="5.00" style="transition-delay: 0.6s;">
                 <h3 class="text-3xl font-bold mb-4 text-purple-400">Clean Edit</h3>
                 <p class="text-5xl font-extrabold mb-6">€5</p>
                 <p class="text-lg mb-6 text-gray-300">
                     A quick and clean edit, perfect for simple cuts, basic enhancements, and getting your footage polished efficiently.
                 </p>
                 <ul class="text-left mb-8 space-y-3 text-gray-200">
-                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Up to 30 Seconds of Final Video</li>
+                    <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Up to 15 Seconds of Final Video</li>
                     <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> 1 Round of Revisions</li>
                     <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Essential Cuts & Transitions</li>
                     <li class="flex items-center"><span class="text-purple-400 mr-2">&#10003;</span> Standard Audio Mix</li>
                 </ul>
-                <!-- PayPal Buy Now Button Placeholder for Clean Edit -->
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
-                    <input type="hidden" name="cmd" value="_xclick">
-                    <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
-                    <input type="hidden" name="item_name" value="Clean Edit Request">
-                    <input type="hidden" name="amount" value="5.00">
-                    <input type="hidden" name="currency_code" value="EUR">
-                    <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
-                    <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
-                    <input type="hidden" name="custom" value="Clean Edit"> <!-- Custom data for your tracking -->
-                    <button type="submit" class="request-button w-full py-4 rounded-lg text-lg bg-purple-600 hover:bg-purple-700 transition-all duration-300">
-                        Request Clean Edit
-                    </button>
-                </form>
+                <button class="request-button w-full py-4 rounded-lg text-lg bg-purple-600 hover:bg-purple-700 transition-all duration-300">
+                    Request Clean Edit
+                </button>
             </div>
 
         </div>
@@ -434,16 +453,75 @@
         </div>
     </section>
 
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 px-4 bg-gray-950 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-white fade-in">Client Reviews</h2>
+        <p class="text-lg text-gray-400 mb-10 fade-in" style="transition-delay: 0.2s;">
+            Hear what our satisfied clients have to say about their experience with SilentEdit.
+        </p>
+        <div class="container mx-auto max-w-3xl">
+            <!-- Placeholder for existing reviews (would be loaded from a backend) -->
+            <div class="space-y-8 mb-12 text-left">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md fade-in" style="transition-delay: 0.3s;">
+                    <div class="flex items-center mb-3">
+                        <span class="text-yellow-400 text-xl mr-2">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <p class="font-bold text-white">John D.</p>
+                    </div>
+                    <p class="text-gray-300 italic">"SilentEdit transformed my raw footage into something truly epic! The Legendary Edit was worth every penny, the effects were outstanding."</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-md fade-in" style="transition-delay: 0.4s;">
+                    <div class="flex items-center mb-3">
+                        <span class="text-yellow-400 text-xl mr-2">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                        <p class="font-bold text-white">Sarah M.</p>
+                    </div>
+                    <p class="text-gray-300 italic">"Got a Premium Edit for my travel vlog, and it looks super professional now. Quick turnaround and great communication!"</p>
+                </div>
+            </div>
+
+            <!-- Review Submission Form -->
+            <h3 class="text-3xl font-bold mb-8 text-white fade-in" style="transition-delay: 0.5s;">Leave a Review</h3>
+            <form id="review-form" class="bg-gray-800 p-8 rounded-xl shadow-lg text-left fade-in" style="transition-delay: 0.6s;">
+                <div class="mb-4">
+                    <label for="reviewer-name" class="block text-gray-300 text-sm font-bold mb-2">Your Name:</label>
+                    <input type="text" id="reviewer-name" name="reviewer-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Your Name" required>
+                </div>
+                <div class="mb-4">
+                    <label for="review-rating" class="block text-gray-300 text-sm font-bold mb-2">Rating:</label>
+                    <div class="flex space-x-1 text-2xl" id="star-rating">
+                        <span class="star cursor-pointer text-gray-500 hover:text-yellow-400" data-value="1">&#9733;</span>
+                        <span class="star cursor-pointer text-gray-500 hover:text-yellow-400" data-value="2">&#9733;</span>
+                        <span class="star cursor-pointer text-gray-500 hover:text-yellow-400" data-value="3">&#9733;</span>
+                        <span class="star cursor-pointer text-gray-500 hover:text-yellow-400" data-value="4">&#9733;</span>
+                        <span class="star cursor-pointer text-gray-500 hover:text-yellow-400" data-value="5">&#9733;</span>
+                    </div>
+                    <input type="hidden" id="review-rating-value" name="review-rating" required>
+                </div>
+                <div class="mb-6">
+                    <label for="review-text" class="block text-gray-300 text-sm font-bold mb-2">Your Review:</label>
+                    <textarea id="review-text" name="review-text" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Share your experience..." required></textarea>
+                </div>
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="glow-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300">
+                        Submit Review
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500 mt-6 text-center">
+                    *Note: Reviews submitted here are for demonstration. For persistent storage and public display, a secure backend with a database (like Firestore) is required.
+                </p>
+            </form>
+        </div>
+    </section>
+
     <!-- Contact/FAQ Section -->
-    <section id="contact" class="py-20 px-4 bg-gray-950 text-center">
+    <section id="contact" class="py-20 px-4 bg-black text-center">
         <h2 class="text-4xl md:text-5xl font-bold mb-12 text-white fade-in">Get In Touch</h2>
         <div class="container mx-auto max-w-2xl text-gray-300">
             <p class="text-lg mb-8 fade-in" style="transition-delay: 0.2s;">
                 Have questions or a custom request? Feel free to reach out to us! We're here to help bring your ideas to life.
             </p>
             <div class="space-y-4 fade-in" style="transition-delay: 0.4s;">
-                <p>Email: <a href="mailto:info@vibe-edits.com" class="text-blue-400 hover:underline">info@vibe-edits.com</a></p>
-                <p>Discord: <span class="text-blue-400">VibeEdits#1234</span></p>
+                <p>Email: <a href="mailto:info@silent-edit.com" class="text-blue-400 hover:underline">info@silent-edit.com</a></p>
+                <p>Discord: <span class="text-blue-400">SilentEdit#1234</span></p>
                 <p>Or send us a message directly:</p>
                 <!-- Simple Contact Form Placeholder -->
                 <form class="bg-gray-800 p-8 rounded-xl shadow-lg text-left">
@@ -500,10 +578,62 @@
     <!-- Footer -->
     <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
         <div class="container mx-auto">
-            <p>&copy; 2025 VibeEdits. All rights reserved.</p>
+            <p>&copy; 2025 SilentEdit. All rights reserved.</p>
             <p class="mt-2">Website still under development. Further fixes and changes are soon to be made.</p>
         </div>
     </footer>
+
+    <!-- Request Details Modal -->
+    <div id="request-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="close-modal">&times;</button>
+            <h3 class="text-3xl font-bold text-white mb-6 text-center">Request Your Edit</h3>
+            <form id="request-details-form">
+                <input type="hidden" id="modal-tier-name">
+                <input type="hidden" id="modal-tier-price">
+
+                <div class="mb-4">
+                    <label for="edit-style" class="block text-gray-300 text-sm font-bold mb-2">Choose Edit Style:</label>
+                    <select id="edit-style" name="edit-style" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" required>
+                        <option value="">-- Select a Style --</option>
+                        <option value="Cinematic">Cinematic</option>
+                        <option value="Gaming Montage">Gaming Montage</option>
+                        <option value="Vlog Style">Vlog Style</option>
+                        <option value="Product Showcase">Product Showcase</option>
+                        <option value="Music Video">Music Video</option>
+                        <option value="Custom">Custom (Describe in notes)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label for="song-choice" class="block text-gray-300 text-sm font-bold mb-2">Song Choice (YouTube/Spotify Link or Name):</label>
+                    <input type="text" id="song-choice" name="song-choice" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="e.g., https://youtu.be/your-song-id or 'Epic Battle Theme'">
+                </div>
+
+                <div class="mb-6">
+                    <label for="additional-notes" class="block text-gray-300 text-sm font-bold mb-2">Additional Notes / Instructions:</label>
+                    <textarea id="additional-notes" name="additional-notes" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-white" placeholder="Any specific details, footage links, or creative ideas..."></textarea>
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <!-- This form will be dynamically populated and submitted by JS -->
+                    <form id="paypal-redirect-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="inline-block">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="your_paypal_email@example.com"> <!-- REPLACE WITH YOUR PAYPAL EMAIL -->
+                        <input type="hidden" name="item_name" id="paypal-item-name">
+                        <input type="hidden" name="amount" id="paypal-amount">
+                        <input type="hidden" name="currency_code" value="EUR">
+                        <input type="hidden" name="return" value="https://yourwebsite.com/success"> <!-- REPLACE WITH YOUR SUCCESS URL -->
+                        <input type="hidden" name="cancel_return" value="https://yourwebsite.com/cancel"> <!-- REPLACE WITH YOUR CANCEL URL -->
+                        <input type="hidden" name="custom" id="paypal-custom-data"> <!-- Custom data for your tracking -->
+                        <button type="submit" class="glow-button bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300">
+                            Proceed to PayPal
+                        </button>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
