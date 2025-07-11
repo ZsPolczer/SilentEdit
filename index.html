@@ -181,12 +181,13 @@
             transform: scale(1.05);
         }
 
-        /* Portfolio video container for aspect ratio */
+        /* Portfolio video container for TikTok aspect ratio (9:16) */
         .video-responsive {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 177.77%; /* 16:9 inverted for 9:16 vertical video */
             height: 0;
             overflow: hidden;
+            background-color: #000; /* Black background for letterboxing if video isn't exactly 9:16 */
         }
         .video-responsive iframe,
         .video-responsive video {
@@ -196,6 +197,7 @@
             width: 100%;
             height: 100%;
             border: 0;
+            object-fit: contain; /* Ensure video fits within the container, letterboxing if needed */
         }
 
         /* Modal Styles */
@@ -364,11 +366,11 @@
             Witness the quality and creativity we bring to every project. Our portfolio showcases a range of styles and complexities.
         </p>
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Portfolio Item 1 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 1 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.3s;">
                 <div class="video-responsive">
                     <!-- Replace with your YouTube/Vimeo embed code or a <video> tag -->
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 1 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+1" alt="Portfolio Video 1 Thumbnail" class="w-full h-full object-cover">
                     <!-- Example for YouTube embed (uncomment and replace URL when ready):
                     <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     -->
@@ -378,50 +380,50 @@
                     <p class="text-gray-400 text-sm">A high-octane edit featuring dynamic cuts, custom effects, and synchronized music.</p>
                 </div>
             </div>
-            <!-- Portfolio Item 2 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 2 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.4s;">
                 <div class="video-responsive">
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 2 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+2" alt="Portfolio Video 2 Thumbnail" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Cinematic Travel Vlog</h3>
                     <p class="text-gray-400 text-sm">Beautifully graded footage with smooth transitions and immersive soundscapes.</p>
                 </div>
             </div>
-            <!-- Portfolio Item 3 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 3 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.5s;">
                 <div class="video-responsive">
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 3 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+3" alt="Portfolio Video 3 Thumbnail" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Product Showcase Reel</h3>
                     <p class="text-gray-400 text-sm">Sleek and engaging visuals designed to highlight key product features effectively.</p>
                 </div>
             </div>
-            <!-- Portfolio Item 4 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 4 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.6s;">
                 <div class="video-responsive">
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 4 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+4" alt="Portfolio Video 4 Thumbnail" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Event Highlight Film</h3>
                     <p class="text-gray-400 text-sm">Capturing the energy and emotion of live events with dynamic editing.</p>
                 </div>
             </div>
-            <!-- Portfolio Item 5 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 5 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.7s;">
                 <div class="video-responsive">
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 5 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+5" alt="Portfolio Video 5 Thumbnail" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Music Video Narrative</h3>
                     <p class="text-gray-400 text-sm">Story-driven editing synchronized to music, enhancing the artistic vision.</p>
                 </div>
             </div>
-            <!-- Portfolio Item 6 - Placeholder for Video Embed -->
+            <!-- Portfolio Item 6 - Placeholder for Video Embed (TikTok Ratio) -->
             <div class="portfolio-item card-glow bg-gray-800 rounded-xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.8s;">
                 <div class="video-responsive">
-                    <img src="https://placehold.co/600x338/1a1a1a/ffffff?text=Video+Placeholder+16:9" alt="Portfolio Video 6 Thumbnail" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/338x600/1a1a1a/ffffff?text=TikTok+Video+6" alt="Portfolio Video 6 Thumbnail" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Educational Content Edit</h3>
@@ -574,14 +576,6 @@
             </p>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
-        <div class="container mx-auto">
-            <p>&copy; 2025 SilentEdit. All rights reserved.</p>
-            <p class="mt-2">Website still under development. Further fixes and changes are soon to be made.</p>
-        </div>
-    </footer>
 
     <!-- Request Details Modal -->
     <div id="request-modal" class="modal-overlay">
